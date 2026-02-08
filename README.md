@@ -108,7 +108,7 @@ This is a **production-ready e-commerce platform** demonstrating full-stack deve
 1. Clone repository:
 
 ```bash
-git clone https://github.com/your-username/aurum-ecommerce.git
+git clone https://github.com/waqar63456/aurum-ecommerce.git
 cd aurum-ecommerce
 Install dependencies:
 
