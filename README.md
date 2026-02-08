@@ -15,6 +15,17 @@
 ![Aurum Demo](screenshots/1.png)  
 ![Aurum Demo](screenshots/2.png)  
 ![Aurum Demo](screenshots/3.png)
+![Aurum Demo](screenshots/4.png)
+![Aurum Demo](screenshots/5.png)
+![Aurum Demo](screenshots/6.png)
+![Aurum Demo](screenshots/7.png)
+![Aurum Demo](screenshots/8.png)
+![Aurum Demo](screenshots/9.png)
+![Aurum Demo](screenshots/10.png)
+![Aurum Demo](screenshots/11.png)
+![Aurum Demo](screenshots/12.png)
+
+
 
 ---
 
@@ -151,17 +162,3 @@ MIT License
 
 ---
 
-### ✅ What makes this **bulletproof & recruiter-ready**
-
-1. **Badges** – show tech stack at a glance  
-2. **Demo video & screenshots** – visual proof you built it  
-3. **Detailed features** – recruiters immediately know what you implemented  
-4. **Installation guide** – anyone can run your project locally  
-5. **Security notes** – shows you follow best practices  
-6. **Professional tone** – full-stack, production-ready language  
-
----
-
-If you want, I can **also make a ready-to-copy version with proper Markdown formatting for screenshots and GIFs** so your repo **looks fully polished on GitHub** with colors, spacing, headings.  
-
-Do you want me to do that next?
