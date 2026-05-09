@@ -23,6 +23,8 @@ import Forgot_Password from './Forgot_Password.vue';
 import Verify_OTP from './Verify_OTP.vue';
 import Reset_new_password from './Reset_new_password.vue';
 import ProductDetail from './ProductDetail.vue';
+import PaymentSuccess from './PaymentSuccess.vue';
+
 
 
 // Define your routes
@@ -63,6 +65,11 @@ const routes = [
         path: '/category',
         name: 'category',
         component: Category,
+    },
+    {
+        path: '/payment_success',
+        name: 'PaymentSuccess',
+        component: PaymentSuccess,
     },
     {
         path: '/checkout',
@@ -148,3 +155,20 @@ const router = createRouter({
 });
 
 export default router;
+
+
+// In your routes.js, add navigation guard
+router.beforeEach((to, from, next) => {
+    const user = localStorage.getItem('user');
+    
+    // Check if route requires authentication
+    if (to.path === '/checkout' && !user) {
+        // Redirect to login with return URL
+        next({
+            path: '/login',
+            query: { redirect: '/checkout' }
+        });
+    } else {
+        next();
+    }
+});

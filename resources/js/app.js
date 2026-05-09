@@ -6,41 +6,47 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
-import App from './components/App.vue'; // Root Vue component
-import router from './components/routes.js'; // Import routes
-
-
-
-
-// Import Vue Toastification and the CSS file
+import App from './components/App.vue';
+import router from './components/routes.js';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
-// Create Vue app instance and use the router
-const app = createApp(App);
+import axios from 'axios';
 
+// Configure axios for session authentication
+window.axios = axios;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.withCredentials = true;  // Important for session cookies
+window.axios.defaults.withXSRFToken = true;
+
+// Get CSRF token from meta tag
+const token = document.head.querySelector('meta[name="csrf-token"]');
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+}
+
+// Set base URL if needed
+window.axios.defaults.baseURL = 'http://127.0.0.1:8000';
+
+const app = createApp(App);
 
 // Optional options for Toastification
 const options = {
     position: POSITION.TOP_RIGHT,
-  timeout: 3000,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  draggablePercent: 0.6,
-  showCloseButtonOnHover: true,
-  closeButton: "button",
-  icon: true,
-  rtl: false,
-  // Custom style for white background
-  toastClassName: "custom-toast-white",
-  };
-  
-  // Use the Toastification plugin in the app
-  app.use(Toast, options);
-// Use the router for navigation
-app.use(router);
+    timeout: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    draggablePercent: 0.6,
+    showCloseButtonOnHover: true,
+    closeButton: "button",
+    icon: true,
+    rtl: false,
+    toastClassName: "custom-toast-white",
+};
 
-// Mount the Vue app to the HTML element with id 'app'
+// Use the Toastification plugin in the app
+app.use(Toast, options);
+app.use(router);
 
 app.mount('#app');

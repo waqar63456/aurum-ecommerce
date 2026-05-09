@@ -93,31 +93,37 @@ class CustomerController extends Controller
 
     return response()->json(['message'=> 'OTP verified successfully']);
 }
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
+  public function login(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|string|email',
+        'password' => 'required|string',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $customer = Customer::where('email', $request->email)->first();
-
-        if (!$customer || !Hash::check($request->password, $customer->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
-        }
-
-    
-
-        // Store use
-        Session::put('customer', $customer);
-        $user=Customer::where('email',$request->email)->first();
-
-        return response()->json(['message'=> 'Loged In Successfully','user'=>$user]);
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 400);
     }
+
+    $customer = Customer::where('email', $request->email)->first();
+
+    if (!$customer || !Hash::check($request->password, $customer->password)) {
+        return response()->json(['message' => 'Invalid credentials'], 401);
+    }
+
+    // Store user in session
+    Session::put('customer', $customer);
+    
+    // Return user data (without sensitive info)
+    return response()->json([
+        'message' => 'Logged In Successfully',
+        'user' => [
+            'id' => $customer->id,
+            'name' => $customer->name,
+            'email' => $customer->email,
+            'profile_image' => $customer->profile_image,
+        ]
+    ]);
+}
 
     public function logout(Request $request)
     {

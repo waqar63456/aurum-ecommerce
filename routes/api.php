@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductApiController;
 use App\Http\Controllers\CategoryApiController;
+use App\Http\Controllers\PaymentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +51,8 @@ Route::get('/products/{id}', [ProductApiController::class, 'show']);
 
 
 
+
+// For session-based authentication (without Sanctum)
+Route::post('/initiate-payment', [PaymentController::class, 'initiatePayment'])->middleware('web');
+
+// Route::middleware('auth')->post('/initiate-payment', [PaymentController::class, 'initiatePayment']);

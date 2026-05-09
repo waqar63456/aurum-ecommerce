@@ -6,6 +6,9 @@
     <title>Aurum</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+
     <!-- Font Awesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-RXf+QSDCUQs6eVo+l+aV69+GQ6nQsoYkmOeV8Z2kU6YAxQAiUEaXY7E1sJZ2x3k4YO1zUjKHEV5u1S9G9+N5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 

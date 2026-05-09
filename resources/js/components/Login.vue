@@ -33,7 +33,7 @@
 
 <script>
 import axios from 'axios';
-import { useToast } from 'vue-toastification'; // Import useToast
+import { useToast } from 'vue-toastification';
 
 export default {
   data() {
@@ -42,13 +42,18 @@ export default {
       password: '',
       loading: false,
       error: null,
+      redirectPath: null
     };
+  },
+  mounted() {
+    // Get redirect path from query params
+    this.redirectPath = this.$route.query.redirect || '/';
   },
   methods: {
     async login() {
       this.loading = true;
       this.error = null;
-      const toast = useToast(); // Initialize toast
+      const toast = useToast();
 
       try {
         // Send the login request to the backend
@@ -61,25 +66,53 @@ export default {
         if (response.data.user) {
           // Store user data in localStorage
           const userData = {
+            id: response.data.user.id,
             name: response.data.user.name,
             email: response.data.user.email,
-            profile_image: response.data.user.profile_image, // Assuming the image URL is returned
-            other_details: response.data.user.other_details, // Add other user details if necessary
+            profile_image: response.data.user.profile_image,
           };
           localStorage.setItem('user', JSON.stringify(userData));
 
-          // Redirect to the home page
-          this.$router.push('/');
-
-          // Show success toast
-          toast.success('✅ Login successful!');
+          // Check if there's a buyNow product in sessionStorage
+          const buyNowProduct = sessionStorage.getItem('buyNowProduct');
+          
+          if (buyNowProduct) {
+            // Clear the buyNow product
+            sessionStorage.removeItem('buyNowProduct');
+            
+            // Parse and add to cart
+            const product = JSON.parse(buyNowProduct);
+            let cart = localStorage.getItem('cart');
+            cart = cart ? JSON.parse(cart) : [];
+            
+            cart.push({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              quantity: product.quantity,
+              size: product.size,
+              colors: product.colors,
+              image: product.image
+            });
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Redirect to checkout
+            toast.success('✅ Login successful! Redirecting to checkout...');
+            setTimeout(() => {
+              this.$router.push('/checkout');
+            }, 1000);
+          } else {
+            // Normal login, redirect to home or previous page
+            toast.success('✅ Login successful!');
+            this.$router.push(this.redirectPath);
+          }
         } else {
-          // Show error toast for invalid credentials
-          toast.error('🚨️Invalid credentials');
+          toast.error('🚨 Invalid credentials');
         }
       } catch (error) {
-        // Show error toast for login failure
-        toast.error(' Login failed. Invalid credentials.');
+        toast.error('Login failed. Invalid credentials.');
+        this.error = 'Login failed. Please check your credentials.';
       } finally {
         this.loading = false;
       }
@@ -149,27 +182,5 @@ button:disabled {
 .error-message {
   color: red;
   text-align: center;
-}
-
-/* Transition for the entering state */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-leave-active {
-  opacity: 1;
-}
-
-.custom-toast-white {
-  background-color: #ffffff !important;
-  color: #191818 !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
-  border: 1px solid #ddd !important;
 }
 </style>
