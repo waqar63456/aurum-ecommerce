@@ -16,7 +16,7 @@ import Main from './Main.vue';
 import Product_list from './Product_list.vue';
 import Single_blog from './Single_blog.vue';
 import Single_product from './Single_product.vue';
-import Otp_form from './otp_form.vue';
+import Otp_form from './Otp_form.vue';
 import User_profile from './User_profile.vue';
 import Update_profile from './Update_profile.vue';
 import Forgot_Password from './Forgot_Password.vue';
@@ -24,6 +24,8 @@ import Verify_OTP from './Verify_OTP.vue';
 import Reset_new_password from './Reset_new_password.vue';
 import ProductDetail from './ProductDetail.vue';
 import PaymentSuccess from './PaymentSuccess.vue';
+// import PaymentSuccess from './PaymentSuccess.vue';
+
 
 
 

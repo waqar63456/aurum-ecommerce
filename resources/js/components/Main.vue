@@ -12,6 +12,8 @@
     <p class="mb-2"><strong>Category:</strong> {{ product.category?.name || 'Uncategorized' }}</p>
   </div>
   <div v-else>
+  <!-- <div v-else> -->
+
     <p>Loading product...</p>
   </div>
 </template>
